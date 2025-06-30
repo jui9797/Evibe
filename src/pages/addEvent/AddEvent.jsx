@@ -1,8 +1,11 @@
 import axios from "axios";
-
+import "sweetalert2/src/sweetalert2.scss";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddEvent = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       attendeeCount: 0,
@@ -13,16 +16,27 @@ const AddEvent = () => {
     console.log(data);
     try {
       const res = await axios.post("http://localhost:5000/events", data);
-      console.log("Event Added on database:", res.data);
+      // console.log("Event Added on database:", res.data);
+      Swal.fire({
+        title: "Congrates",
+        text: "Event added on database",
+        icon: "success",
+      });
       reset();
+      navigate("/event");
     } catch (error) {
       console.error("Error adding event:", error);
+      Swal.fire({
+        title: "error",
+        text: "Something went wrong",
+        icon: "error",
+      });
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded">
-      <h2 className="text-2xl font-semibold mb-4">Add Event</h2>
+    <div className="max-w-md mx-auto p-6  shadow-md rounded my-4 bg-pink-200">
+      <h2 className="text-2xl font-semibold mb-4">Add An Event</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block font-medium">Event Title</label>

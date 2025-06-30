@@ -1,7 +1,14 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+
+import { Link, NavLink } from "react-router-dom";
 import eventlogo from "../assets/event.png";
+import { MdLogin } from "react-icons/md";
+import { AuthContext } from "../provider/AuthProvider";
+import Spinner from "./Spinner";
 const Navbar = () => {
+  const { user, loading, handleLogout } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+
   const links = (
     <>
       <NavLink to="/">Home</NavLink>
@@ -10,6 +17,7 @@ const Navbar = () => {
       <NavLink to="/MyEvent">My Event</NavLink>
     </>
   );
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -51,18 +59,60 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <div className="flex gap-2">
-            <button className="btn text-white bg-blue-500 font-bold hover:bg-pink-500">
-              Signup
-              {/* <Link to="/signup">
-                <img className="w-6 h-6" src={} alt="" />
-              </Link> */}
-            </button>
-            <button className="btn text-white bg-blue-500 font-bold hover:bg-pink-500">
-              Login
-              {/* <Link to="/login">
-                <MdLogin />
-              </Link> */}
-            </button>
+            {loading ? (
+              <>
+                <Spinner></Spinner>
+              </>
+            ) : (
+              <>
+                {user ? (
+                  <>
+                    <div className="relative inline-block">
+                      {/* Profile Image */}
+                      <img
+                        src={user?.photoURL}
+                        alt="user-photo"
+                        className="w-10 h-10 rounded-full cursor-pointer border border-gray-300"
+                        onMouseEnter={() => setOpen(true)}
+                        onMouseLeave={() =>
+                          setTimeout(() => setOpen(false), 3000)
+                        }
+                      />
+
+                      {/* Dropdown */}
+                      {open && (
+                        <div
+                          onMouseEnter={() => setOpen(true)}
+                          onMouseLeave={() => setOpen(false)}
+                          className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50"
+                        >
+                          <div className="px-4 py-2 text-gray-800 font-medium border-b">
+                            {user?.name}
+                          </div>
+                          <button
+                            onClick={handleLogout}
+                            className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-500"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <button className="btn text-white bg-blue-500 font-bold hover:bg-pink-500">
+                      <Link to="/register">Sign Up</Link>
+                    </button>
+                    <button className="btn text-white bg-blue-500 font-bold hover:bg-pink-500">
+                      <Link to="/login">
+                        <MdLogin />
+                      </Link>
+                    </button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
