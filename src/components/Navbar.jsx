@@ -5,9 +5,9 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/"> Events</NavLink>
-      <NavLink to="/">Add Event</NavLink>
-      <NavLink to="/">My Event</NavLink>
+      <NavLink to="/event"> Events</NavLink>
+      <NavLink to="/addEvent">Add Event</NavLink>
+      <NavLink to="/MyEvent">My Event</NavLink>
     </>
   );
   return (
