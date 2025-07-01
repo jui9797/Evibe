@@ -88,3 +88,5 @@ The backend handles:
 - Middleware for secured routes
 
 ## Backend GitHub Repo: ('https://github.com/jui9797/Evibe-server')
+
+## Live('https://evibe-fe4bb.web.app/')
