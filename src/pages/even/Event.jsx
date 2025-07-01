@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import EventCard from "./EventCard";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const Event = () => {
+  const { user } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
@@ -58,7 +60,7 @@ const Event = () => {
 
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
-          <EventCard key={event._id} event={event} />
+          <EventCard key={event._id} event={event} user={user} />
         ))}
       </div>
     </div>

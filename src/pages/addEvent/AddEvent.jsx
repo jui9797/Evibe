@@ -3,8 +3,11 @@ import "sweetalert2/src/sweetalert2.scss";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const AddEvent = () => {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -13,10 +16,11 @@ const AddEvent = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // Ensure attendeeCount is a number
+    data.attendeeCount = parseInt(data.attendeeCount) || 0;
+
     try {
       const res = await axios.post("http://localhost:5000/events", data);
-      // console.log("Event Added on database:", res.data);
       Swal.fire({
         title: "Congrates",
         text: "Event added on database",
@@ -24,6 +28,7 @@ const AddEvent = () => {
       });
       reset();
       navigate("/event");
+      // console.log(res.data);
     } catch (error) {
       console.error("Error adding event:", error);
       Swal.fire({
@@ -33,7 +38,7 @@ const AddEvent = () => {
       });
     }
   };
-
+  // console.log(user);
   return (
     <div className="max-w-md mx-auto p-6  shadow-md rounded my-4 bg-pink-200">
       <h2 className="text-2xl font-semibold mb-4">Add An Event</h2>
@@ -52,6 +57,14 @@ const AddEvent = () => {
           <input
             type="text"
             {...register("name", { required: true })}
+            className="w-full border border-gray-300 p-2 rounded"
+          />
+        </div>
+        <div>
+          <label className="block font-medium">Email (Posted By)</label>
+          <input
+            type="Email"
+            {...register("email", { required: true })}
             className="w-full border border-gray-300 p-2 rounded"
           />
         </div>
@@ -87,6 +100,8 @@ const AddEvent = () => {
           <input
             type="number"
             {...register("attendeeCount", { required: true })}
+            defaultValue={0}
+            readOnly
             className="w-full border border-gray-300 p-2 rounded"
             min={0}
           />

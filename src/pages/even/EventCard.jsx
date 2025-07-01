@@ -1,6 +1,19 @@
-const EventCard = ({ event }) => {
-  const { eventTitle, name, dateTime, location, description, attendeeCount } =
-    event;
+import axios from "axios";
+import { useState } from "react";
+
+const EventCard = ({ event, user }) => {
+  const {
+    _id,
+    eventTitle,
+    name,
+    dateTime,
+    location,
+    description,
+    attendeeCount,
+  } = event;
+
+  const [joined, setJoined] = useState(false);
+  const [count, setCount] = useState(attendeeCount);
 
   const formattedDate = new Date(dateTime).toLocaleDateString();
   const formattedTime = new Date(dateTime).toLocaleTimeString([], {
@@ -8,6 +21,18 @@ const EventCard = ({ event }) => {
     minute: "2-digit",
   });
 
+  const handleJoin = async () => {
+    try {
+      const res = await axios.patch(`http://localhost:5000/events/join/${_id}`);
+      if (res.data.modifiedCount > 0) {
+        setJoined(true); // disable button
+        setCount(count + 1); // update UI
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Something went wrong");
+    }
+  };
+  console.log(typeof attendeeCount);
   return (
     <div className="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition duration-300 w-full">
       <h2 className="text-xl font-bold text-indigo-600">{eventTitle}</h2>
@@ -18,10 +43,16 @@ const EventCard = ({ event }) => {
       <p className="text-gray-700 mt-2">{description}</p>
       <div className="mt-4 flex justify-between items-center">
         <span className="text-sm font-medium text-gray-600">
-          🧍 Attendees: {attendeeCount}
+          🧍 Attendees: {count}
         </span>
-        <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 text-sm">
-          Join Event
+        <button
+          onClick={handleJoin}
+          disabled={joined}
+          className={`${
+            joined ? "bg-gray-400" : "bg-pink-500 hover:bg-pink-600"
+          } text-white px-4 py-2 rounded text-sm transition`}
+        >
+          {joined ? "Already Joined" : "Join Event"}
         </button>
       </div>
     </div>
