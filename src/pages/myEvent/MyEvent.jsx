@@ -15,7 +15,9 @@ const MyEvent = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/eventsByEmail?email=${user.email}`)
+        .get(
+          `https://evibe-server-mz4t.vercel.app/eventsByEmail?email=${user.email}`
+        )
         .then((res) => setMyEvents(res.data))
         .catch((err) => console.error("Failed to fetch events:", err));
     }
@@ -35,7 +37,9 @@ const MyEvent = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await axios.delete(`http://localhost:5000/events/${id}`);
+        const res = await axios.delete(
+          `https://evibe-server-mz4t.vercel.app/events/${id}`
+        );
         if (res.status === 200) {
           setMyEvents(myEvents.filter((event) => event._id !== id));
           Swal.fire("Deleted!", "Your event has been deleted.", "success");

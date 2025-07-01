@@ -25,7 +25,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/register",
+        "https://evibe-server-mz4t.vercel.app/register",
         formData
       );
       //   console.log("Registration successful:", response.data);

@@ -24,7 +24,7 @@ const EventCard = ({ event, user }) => {
   const handleJoin = async () => {
     try {
       const res = await axios.patch(
-        `http://localhost:5000/events/join/${_id}`,
+        `https://evibe-server-mz4t.vercel.app/events/join/${_id}`,
         { email: user?.email }
       );
       // console.log(res.data);

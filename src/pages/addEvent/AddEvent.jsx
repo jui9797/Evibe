@@ -20,7 +20,10 @@ const AddEvent = () => {
     data.attendeeCount = parseInt(data.attendeeCount) || 0;
 
     try {
-      const res = await axios.post("http://localhost:5000/events", data);
+      const res = await axios.post(
+        "https://evibe-server-mz4t.vercel.app/events",
+        data
+      );
       Swal.fire({
         title: "Congrates",
         text: "Event added on database",

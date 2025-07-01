@@ -18,7 +18,7 @@ const Event = () => {
         if (filter) query.append("filter", filter);
 
         const res = await axios.get(
-          `http://localhost:5000/allEvents?${query.toString()}`
+          `https://evibe-server-mz4t.vercel.app/allEvents?${query.toString()}`
         );
         setEvents(res.data);
       } catch (error) {

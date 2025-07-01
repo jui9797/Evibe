@@ -16,7 +16,7 @@ const UpdateEvent = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/events/${event?._id}`,
+        `https://evibe-server-mz4t.vercel.app/events/${event?._id}`,
         data
       );
       if (res.data.modifiedCount > 0) {

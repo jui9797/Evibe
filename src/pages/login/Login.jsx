@@ -16,7 +16,9 @@ const Login = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/allUsers");
+        const res = await axios.get(
+          "https://evibe-server-mz4t.vercel.app/allUsers"
+        );
         setAllUsers(res.data);
       } catch (err) {
         console.error("Error fetching users:", err);
