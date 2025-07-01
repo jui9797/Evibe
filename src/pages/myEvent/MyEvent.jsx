@@ -2,10 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
+import { FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 const MyEvent = () => {
   const { user } = useContext(AuthContext);
   const [myEvents, setMyEvents] = useState([]);
-  console.log(user);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user?.email) {
       axios
@@ -14,6 +20,37 @@ const MyEvent = () => {
         .catch((err) => console.error("Failed to fetch events:", err));
     }
   }, [user]);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await axios.delete(`http://localhost:5000/events/${id}`);
+        if (res.status === 200) {
+          setMyEvents(myEvents.filter((event) => event._id !== id));
+          Swal.fire("Deleted!", "Your event has been deleted.", "success");
+        }
+      } catch (error) {
+        console.error("Failed to delete event:", error);
+        Swal.fire("Error!", "Failed to delete event.", "error");
+      }
+    }
+  };
+
+  const handleUpdate = (eventData) => {
+    navigate("/updateEvent", { state: { event: eventData } });
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4">
       <h3 className="text-2xl font-bold mb-4">My Events</h3>
@@ -59,9 +96,20 @@ const MyEvent = () => {
                   <span className="font-bold">Attendees:</span>{" "}
                   {event?.attendeeCount}
                 </p>
-                <button className="btn p-2 text-xl text-red-500">
-                  <MdDelete />
-                </button>
+                <div>
+                  <button
+                    onClick={() => handleUpdate(event)}
+                    className="btn p-2 text-xl text-amber-500 mr-2"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(event?._id)}
+                    className="btn p-2 text-xl text-red-500"
+                  >
+                    <MdDelete />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
