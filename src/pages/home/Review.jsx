@@ -43,7 +43,7 @@ const Review = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       sliderRef.current?.next();
-    }, 4000); // 4 seconds
+    }, 4000);
 
     return () => clearInterval(interval); // cleanup
   }, []);

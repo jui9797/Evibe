@@ -27,10 +27,10 @@ const EventCard = ({ event, user }) => {
         `http://localhost:5000/events/join/${_id}`,
         { email: user?.email }
       );
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.modifiedCount > 0 || res.data.email === user?.email) {
-        setJoined(true); // disable button
-        setCount(count + 1); // update UI
+        setJoined(true);
+        setCount(count + 1);
       }
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
