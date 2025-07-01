@@ -40,7 +40,7 @@ const AddEvent = () => {
   };
   // console.log(user);
   return (
-    <div className="max-w-md mx-auto p-6  shadow-md rounded my-4 bg-pink-200">
+    <div className="max-w-md mx-auto p-6  shadow-md rounded my-4 bg-pink-200 px-4">
       <h2 className="text-2xl font-semibold mb-4">Add An Event</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>

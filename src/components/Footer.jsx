@@ -5,6 +5,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import logoImg from "../assets/event.png";
 
 const Footer = () => {
   return (
@@ -12,9 +13,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand Info */}
         <div>
-          <h2 className="text-2xl font-bold text-pink-500 mb-4">
-            <span className="text-pink-700">E</span>vibe
-          </h2>
+          <img src={logoImg} alt="logo" className="w-20 h-20" />
           <p className="text-sm">
             Your ultimate event planning platform. Connect, Create & Celebrate
             effortlessly.

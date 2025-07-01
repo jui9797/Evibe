@@ -8,6 +8,7 @@ import MyEvent from "../pages/myEvent/MyEvent";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
 import UpdateEvent from "../components/UpdateEvent";
+import Private from "../private/Private";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +22,28 @@ const router = createBrowserRouter([
       },
       {
         path: "/event",
-        element: <Event></Event>,
+        element: (
+          <Private>
+            {" "}
+            <Event></Event>
+          </Private>
+        ),
       },
       {
         path: "/addEvent",
-        element: <AddEvent></AddEvent>,
+        element: (
+          <Private>
+            <AddEvent></AddEvent>
+          </Private>
+        ),
       },
       {
         path: "/MyEvent",
-        element: <MyEvent></MyEvent>,
+        element: (
+          <Private>
+            <MyEvent></MyEvent>
+          </Private>
+        ),
       },
       {
         path: "/register",
@@ -41,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/updateEvent",
-        element: <UpdateEvent></UpdateEvent>,
+        element: (
+          <Private>
+            <UpdateEvent></UpdateEvent>
+          </Private>
+        ),
       },
     ],
   },

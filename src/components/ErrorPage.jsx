@@ -1,9 +1,7 @@
-import React from "react";
-
 const ErrorPage = () => {
   return (
     <div className="min-h-screen">
-      <h3>You Got an Error...!</h3>
+      <h3 className="text-3xl lg:text-6xl">You Got an Error...!</h3>
     </div>
   );
 };
