@@ -26,8 +26,6 @@ This is the frontend of a fully functional **Event Management Web Application** 
 - **Tailwind CSS**
 - **SweetAlert2**
 - **Context API** for Auth handling
-- **JWT** (token managed from backend)
-- **Day.js / Date-fns** (for date formatting if used)
 
 ---
 
@@ -77,16 +75,13 @@ npm run dev
 ## Authentication
 
 - Custom login/registration form
-
-- JWT Token is stored in localStorage and used for protected routes
-
 - Auth state is managed using Context API
 
 ## Backend API (Node + Express + MongoDB)
 
 The backend handles:
 
-- User authentication with hashed passwords and JWT
+- User authentication with passwords
 - Event CRUD operations
 - Attendee count management
 - Email-based event fetching
