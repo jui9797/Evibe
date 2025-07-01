@@ -23,8 +23,12 @@ const EventCard = ({ event, user }) => {
 
   const handleJoin = async () => {
     try {
-      const res = await axios.patch(`http://localhost:5000/events/join/${_id}`);
-      if (res.data.modifiedCount > 0) {
+      const res = await axios.patch(
+        `http://localhost:5000/events/join/${_id}`,
+        { email: user?.email }
+      );
+      console.log(res.data);
+      if (res.data.modifiedCount > 0 || res.data.email === user?.email) {
         setJoined(true); // disable button
         setCount(count + 1); // update UI
       }
@@ -32,7 +36,7 @@ const EventCard = ({ event, user }) => {
       alert(error.response?.data?.message || "Something went wrong");
     }
   };
-  console.log(typeof attendeeCount);
+
   return (
     <div className="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition duration-300 w-full">
       <h2 className="text-xl font-bold text-indigo-600">{eventTitle}</h2>
@@ -43,7 +47,7 @@ const EventCard = ({ event, user }) => {
       <p className="text-gray-700 mt-2">{description}</p>
       <div className="mt-4 flex justify-between items-center">
         <span className="text-sm font-medium text-gray-600">
-          🧍 Attendees: {count}
+          Attendees: {count}
         </span>
         <button
           onClick={handleJoin}

@@ -12,6 +12,7 @@ const AddEvent = () => {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       attendeeCount: 0,
+      joinedEmails: [],
     },
   });
 

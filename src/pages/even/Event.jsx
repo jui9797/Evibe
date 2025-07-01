@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import EventCard from "./EventCard";
 import { AuthContext } from "../../provider/AuthProvider";
+import { CgSpinner } from "react-icons/cg";
 
 const Event = () => {
   const { user } = useContext(AuthContext);
@@ -59,9 +60,20 @@ const Event = () => {
       </div>
 
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {events.map((event) => (
-          <EventCard key={event._id} event={event} user={user} />
-        ))}
+        {events?.length === 0 ? (
+          <>
+            <div>
+              <CgSpinner className="animate-spin text-5xl text-black" />
+            </div>
+          </>
+        ) : (
+          <>
+            {" "}
+            {events.map((event) => (
+              <EventCard key={event._id} event={event} user={user} />
+            ))}{" "}
+          </>
+        )}
       </div>
     </div>
   );
